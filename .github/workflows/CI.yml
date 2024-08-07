@@ -19,11 +19,11 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements/requirements.txt
     - name: Train and save pipeline
-      run: python titanic_model/train_pipeline.py
+      run: python bikeshare_model/train_pipeline.py
     - uses: actions/upload-artifact@v2
       with:
         name: my-trained-pipeline
-        path: titanic_model/trained_models/*.pkl
+        path: bikeshare_model/trained_models/*.pkl
         retention-days: 1
 
   test:
@@ -40,7 +40,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: my-trained-pipeline
-        path: titanic_model/trained_models
+        path: bikeshare_model/trained_models
     - name: Install dependencies
       run: pip install -r requirements/test_requirements.txt
     - name: Test with pytest
@@ -60,7 +60,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: my-trained-pipeline
-        path: titanic_model/trained_models
+        path: bikeshare_model/trained_models
     - name: Install dependencies
       run: pip install --upgrade build
     - name: Build package
@@ -81,7 +81,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: my-build-package
-        path: titanic_model_api
+        path: bikeshare_model_api
 
     - name: Login to Docker hub
       env:
@@ -92,14 +92,13 @@ jobs:
     - name: Build the Docker image for Fastapi app
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER_NAME }}
-      run: docker build . -f Dockerfile -t $DOCKER_USER/titanic-fastapi:latest
+      run: docker build . -f Dockerfile -t $DOCKER_USER/bikeshare-model-api:latest
 
     - name: Push the Docker Image
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER_NAME }}
-      run: docker push $DOCKER_USER/titanic-fastapi
+      run: docker push $DOCKER_USER/bikeshare-model-api
 
     - name: Logout to Docker hub
       run: docker logout
 
-      
