@@ -126,3 +126,7 @@ random_state: 42
 # Alogrithm parameters
 n_estimators: 100
 max_depth: 10
+
+# mlflow tracking uri
+registered_model_name: sklearn-bikeshare-rf-model
+mlflow_tracking_uri: "http://127.0.0.1:5000/"

@@ -5,9 +5,7 @@ file = Path(__file__).resolve()
 parent, root = file.parent, file.parents[1]
 sys.path.append(str(root))
 
-from pathlib import Path
 from typing import Dict, List
-
 from pydantic import BaseModel
 from strictyaml import YAML, load
 
@@ -32,6 +30,8 @@ class AppConfig(BaseModel):
     training_data_file: str
     pipeline_name: str
     pipeline_save_file: str
+    registered_model_name: str
+    mlflow_tracking_uri: str
 
 
 class ModelConfig(BaseModel):
